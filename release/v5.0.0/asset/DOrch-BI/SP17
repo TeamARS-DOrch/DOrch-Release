@@ -1,0 +1,12 @@
+#!/bin/sh
+read -d '\n' Pyld << 'String'
+{
+        "Rqst": "Estate/Drive/Flash:create",
+        "Drvv": "a4e0968f-7f07-4d74-a632-3dd2ab8aabbb",
+        "Seed": {
+                "ID": "23548f08-c33e-44b5-a7ea-7929ef4b01c7",
+                "SpaceAlwnc": 4294967296
+        }
+}
+String
+curl --unix-socket "/tmp/DOrch" -X POST -d "$Pyld" 'http://DOrch/v5'

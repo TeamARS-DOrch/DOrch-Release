@@ -1,0 +1,15 @@
+#!/bin/sh
+read -d '\n' Pyld << String
+{
+        "Rqst": "Estate/Prjct/NtwrkID[Scndry]:update",
+        "Prjc": "e8750a8b-d538-4ea6-b66a-d2e0d16ec7c4",
+        "Seed": {
+                "NewID": [
+                        "a1.HOST-p1.qbqetell.ng",
+                        "a2.HOST-p1.qbqetell.ng",
+                        "a3.HOST-p1.qbqetell.ng"
+                ]
+        }
+}
+String
+curl --unix-socket "/tmp/DOrch" -X POST -d "$Pyld" 'http://DOrch/v5'

@@ -1,0 +1,58 @@
+#!/bin/bash
+trap "echo 'Installation failed'; exit 1" ERR
+sed  -i '/net.ipv4.ip_local_port_range/d' /etc/sysctl.conf
+sed  -i '/^$/d'                           /etc/sysctl.conf
+echo "net.ipv4.ip_local_port_range = 35001 65000" | tee -a /etc/sysctl.conf
+dnf install epel-release -y
+dnf update  -y
+dnf upgrade -y
+dnf update  -y
+dnf install certbot chrony coreutils haproxy iproute-tc nftables podman policycoreutils polkit procps-ng rsync shadow-utils systemd util-linux util-linux-core xfsprogs -y
+setsebool  -P haproxy_connect_any 1
+mkdir -p      /etc/systemd/system/user@.service.d
+touch         /etc/systemd/system/user@.service.d/delegate.conf
+truncate -s 0 /etc/systemd/system/user@.service.d/delegate.conf
+chmod    0700 /etc/systemd/system/user@.service.d/delegate.conf
+cat << 'ST' > /etc/systemd/system/user@.service.d/delegate.conf
+[Service]
+Delegate=cpu cpuset memory pids io
+ST
+mkdir -p      /etc/DOrch/v5
+touch         /etc/DOrch/v5/Cnfg
+touch         /etc/DOrch/v5/Estate
+chmod -R 0700 /etc/DOrch
+cat << 'ST' > /etc/DOrch/v5/Cnfg
+{
+   "PrmryNtwrkIntrfcId": "eth0",
+   "PrjctUptimeKpngIntrvl": 300000, // ms
+   "ThrdELMnActvtnFlag": false,
+   "SmtpSrvrAdrs": "",
+   "SmtpSrvrPort": "",
+   "SmtpUserName": "",
+   "SmtpPassWord": "",
+   "SmtpFromName": "",
+   "SmtpFromMail": "",
+   "SmtpDstnName": "",
+   "SmtpDstnMail": "",
+   "SmtpEmlnRate": 1024
+}
+ST
+cat << 'ST' > /etc/DOrch/v5/Estate
+{
+   "ID": "",
+   "CorePeakPower": 4096,
+   "Core": [4096],
+   "DomainName": "",
+   "PublicIpAdrs": ""
+}
+ST
+systemctl enable podman
+systemctl start  podman
+rm -rf /sbin/DOrch*
+rm -rf /root/.DOrch*
+cp     asset/DOrch-HTTP     /sbin/
+cp     asset/DOrch-HTTP-TLS /sbin/
+cp     asset/DOrch-Daemon   /sbin/
+cp -r  asset/DOrch-BI       /root/.DOrch-BI
+chmod 0700 /sbin/DOrch*
+chmod 0700 /root/.DOrch*
