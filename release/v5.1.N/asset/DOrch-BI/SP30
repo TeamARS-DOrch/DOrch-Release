@@ -1,0 +1,9 @@
+#!/bin/sh
+read -d '\n' Pyld << 'String'
+{
+        "Rqst": "Estate/Prjct/Flash:infuse",
+        "Prjc": "e8750a8b-d538-4ea6-b66a-d2e0d16ec7c4",
+        "Flsh": "9432b12c-4964-44ad-8630-2bd9813ab882"
+}
+String
+curl --unix-socket "/tmp/DOrch" -X POST -d "$Pyld" 'http://DOrch/v5'
