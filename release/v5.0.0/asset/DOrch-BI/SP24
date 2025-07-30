@@ -1,9 +1,0 @@
-#!/bin/sh
-read -d '\n' Pyld << 'String'
-{
-        "Rqst": "Estate/Drive/Flash:eject",
-        "Drvv": "dad4c8da-266a-4cad-841b-e403f8e1b523",
-        "Flsh": "ec43fa46-db95-4451-9bd0-2c2f7e9b14af"
-}
-String
-curl --unix-socket "/tmp/DOrch" -X POST -d "$Pyld" 'http://DOrch/v5'

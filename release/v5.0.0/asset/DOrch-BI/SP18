@@ -1,8 +1,0 @@
-#!/bin/sh
-read -d '\n' Pyld << 'String'
-{
-        "Rqst": "Estate/Drive/Flash:scan",
-        "Drvv": "a4e0968f-7f07-4d74-a632-3dd2ab8aabbb"
-}
-String
-curl --unix-socket "/tmp/DOrch" -X POST -d "$Pyld" 'http://DOrch/v5'
