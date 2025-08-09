@@ -1,0 +1,8 @@
+
+#!/bin/sh
+read -d '\n' Pyld << 'String'
+{
+        "Rqst": "Estate[IntlztStatus]:fetch"
+}
+String
+curl --unix-socket "/tmp/DOrch" -X POST -d "$Pyld" 'http://DOrch/v5'
