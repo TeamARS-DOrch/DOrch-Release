@@ -1,2 +1,0 @@
-#!/bin/sh
-curl --unix-socket "/tmp/DOrch" -X POST -d @SP65.data 'http://DOrch/v5'

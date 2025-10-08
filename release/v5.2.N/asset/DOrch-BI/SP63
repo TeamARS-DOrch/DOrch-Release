@@ -1,9 +1,0 @@
-#!/bin/sh
-read -d '\n' Pyld << String
-{
-        "Rqst": "Estate/Prjct/Plate/Pot:intlz",
-        "Prjc": "e8750a8b-d538-4ea6-b66a-d2e0d16ec7c4",
-        "Pltt": "5356ae81-3795-420a-971e-45d12fa05383"
-}
-String
-curl --unix-socket "/tmp/DOrch" -X POST -d "$Pyld" 'http://DOrch/v5'
